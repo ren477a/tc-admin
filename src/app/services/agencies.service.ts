@@ -16,7 +16,7 @@ export class AgenciesService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     let ep = this.base + 'agencies/' + id
-    return this.http.put(ep, {status: 'onsale'}, {headers: headers})
+    return this.http.put(ep, {status: 'active'}, {headers: headers})
       .map(res => res.json());
   }
 
