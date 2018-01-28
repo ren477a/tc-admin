@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ToursService {
 
-  base: String = 'http://travelcatalog.me/api/'
+  base: String = 'http://www.travelcatalog.me/api/'
 
   constructor(private http: Http) {
   }
@@ -37,10 +37,18 @@ export class ToursService {
       .map(res => res.json());
   }
 
-  readAll() {
+  readAll(page) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    let ep = this.base + 'tours'
+    let ep = this.base + 'tours' + '?page=' + page
+    return this.http.get(ep, { headers: headers })
+      .map(res => res.json());
+  }
+
+  readPendingTours() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let ep = this.base + 'tours' + '?status=pending'
     return this.http.get(ep, { headers: headers })
       .map(res => res.json());
   }
