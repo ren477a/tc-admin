@@ -1,51 +1,97 @@
 <h1>Users</h1>
-
 <h2>Manage Users</h2>
+<button class="btn btn-success float-right m-2" data-toggle="modal" data-target="#AddUser">Add User</button>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>ID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
         <th>Email</th>
-        <th>Mobile Number</th>
-        <th></th>
+        <th>Mobile</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Lorem</td>
-        <td>Lorem</td>
-        <td>ipsum</td>
-        <td>ipsum</td>
+      <tr *ngFor="let tour of tours">
+        <td>{{tour._id.substring(tour._id.length-5)}}</td>
+        <td>{{tour.title}}</td>
+        <td>{{tour.agency}}</td>
+        <td>{{tour.price}}</td>
+        <td>{{tour.date | date:'dd/MM/yy HH:mm'}}</td>
         <td>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditUser">Edit</button>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete">Delete</button>
+          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
 <div class="row justify-content-center align-items-center">
   <div class="center-div anchor">
     <br>
     <ul class="pagination pagination-md">
       <li class="page-item">
-        <a class="page-link" href="#">Previous</a>
+        <a (click)="previousPage()" class="page-link">Previous</a>
       </li>
+      <div *ngFor="let page of pages; let i = index">
+        <li class="page-item" [class.active]="isActivePage(i)">
+          <a (click)="toPage(page)" class="page-link">{{page}}</a>
+        </li>
+      </div>
       <li class="page-item">
-        <a class="page-link active" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
+        <a (click)="nextPage()" class="page-link">Next</a>
       </li>
     </ul>
     <br>
+  </div>
+</div>
+
+
+<!--MODAL Add User-->
+<div class="modal fade" id="AddUser">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" align="center">New User</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control mt-1" placeholder="First Name">
+        <input type="text" class="form-control mt-1" placeholder="Last Name">
+        <input type="text" class="form-control mt-1" placeholder="Mobile Number">
+        <input type="text" class="form-control mt-1" placeholder="Email">
+        <input type="text" class="form-control mt-1" placeholder="Password">
+      </div>
+      <div class="modal-footer">
+        <button align="right" type="button" class="btn btn-primary" align="right">Accept</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL Edit User-->
+<div class="modal fade" id="EditUser">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" align="center">EDIT USER</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control mt-1" value="First Name">
+        <input type="text" class="form-control mt-1" value="Last Name">
+        <input type="text" class="form-control mt-1" value="Mobile Number">
+        <input type="text" class="form-control mt-1" value="Email">
+        <input type="text" class="form-control mt-1" value="Password">
+      </div>
+      <div class="modal-footer">
+        <button align="right" type="button" class="btn btn-primary" align="right">Accept</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -20,6 +20,22 @@ export class ToursComponent implements OnInit {
     this.pages = Array(5).fill(1).map((x,i)=>i);
   }
 
+  approveTours(id) {
+
+  }
+
+  saveNewTours() {
+
+  }
+
+  deleteTours(id) {
+
+  }
+
+  updateTours(id) {
+
+  }
+
   ngOnInit() {
     this.activePage = 1
     this.fetchToursData()

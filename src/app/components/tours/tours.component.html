@@ -21,7 +21,7 @@
         <td>{{ptour.price}}</td>
         <td>{{ptour.date | date:'dd/MM/yy HH:mm'}}</td>
         <td>
-          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#EditTrans">Details</button>
+          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#EditTour">Details</button>
           <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#delete">Approve</button>
           <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Deny</button>
         </td>
@@ -31,6 +31,7 @@
 </div>
 
 <h2>Manage Tours</h2>
+<button class="btn btn-success float-right m-2" data-toggle="modal" data-target="#AddTour">Add Tour</button>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -76,5 +77,41 @@
       </li>
     </ul>
     <br>
+  </div>
+</div>
+
+<!--MODAL ADD TOUR-->
+<div class="modal fade" id="AddTour">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+       <h4 class="modal-title">New Tour Package</h4>
+		
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+		<input type="text" class="form-control mt-1" placeholder="Tour Package Name"><hr>
+		<a><img src="http://via.placeholder.com/350x150"></a> <input type="file"><hr>
+		<input type="text" class="form-control mt-1" placeholder="Agency">
+		<input type="text" class="form-control mt-1" placeholder="Type">
+        <textarea class="form-control mt-1" rows="5" placeholder="Description"></textarea>
+		<input type="text" class="form-control mt-1" placeholder="Duration">
+		<textarea class="form-control mt-1" rows="5" placeholder="Itenerary"></textarea>
+		<textarea class="form-control mt-1" rows="5" placeholder="Inclusions"></textarea>
+		<textarea class="form-control mt-1" rows="5" placeholder="Exclusions"></textarea>
+		<textarea class="form-control mt-1" rows="5" placeholder="Terms"></textarea>
+		<input type="text" class="form-control mt-1" placeholder="Validity">
+		<input type="text" class="form-control mt-1" placeholder="Price">
+      </div>
+		
+      <!-- Modal footer -->
+      <div class="modal-footer">
+	  <button align="left" type="button" class="btn btn-primary btn-md">Accept</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
   </div>
 </div>
