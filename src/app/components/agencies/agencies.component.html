@@ -24,8 +24,8 @@
         <td>{{pagency.status}}</td>
         <td>
           <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#EditTrans">Details</button>
-          <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#delete">Approve</button>
-          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Deny</button>
+          <button (click)="approveAgency(pagency)" type="button" class="btn btn-success" data-toggle="modal" data-target="#delete">Approve</button>
+          <button (click)="denyAgency(pagency)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Deny</button>
         </td>
       </tr>
     </tbody>
@@ -58,7 +58,7 @@
         <td>
           <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#EditTrans">Details</button>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAgency">Edit</button>
-          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Delete</button>
+          <button (click)="deleteAgency(agency)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
         </td>
       </tr>
     </tbody>

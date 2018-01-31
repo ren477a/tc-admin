@@ -16,7 +16,15 @@ export class AgenciesService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     let ep = this.base + 'agencies/' + id
-    return this.http.put(ep, {status: 'active'}, {headers: headers})
+    return this.http.put(ep, {status: 'approved'}, {headers: headers})
+      .map(res => res.json());
+  }
+
+  deny(id) {
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.base + 'agencies/' + id
+    return this.http.put(ep, {status: 'denied'}, {headers: headers})
       .map(res => res.json());
   }
 

@@ -24,16 +24,30 @@ export class AgenciesComponent implements OnInit {
     this.fetchPendingAgenciesData()
   }
 
-  approveAgency(id) {
+  approveAgency(agency) {
+    this.agenciesSvc.approve(agency._id).subscribe(res => {
+      console.log(agency._id + " approved")
+      this.fetchPendingAgenciesData()
+      this.fetchAgenciesData()
+    })
+  }
 
+  denyAgency(agency) {
+    this.agenciesSvc.deny(agency._id).subscribe(res => {
+      console.log(agency._id + " approved")
+      this.fetchPendingAgenciesData()
+      this.fetchAgenciesData()
+    })
   }
 
   saveNewAgency() {
 
   }
 
-  deleteAgency(id) {
-
+  deleteAgency(agency) {
+    this.agenciesSvc.delete(agency._id).subscribe(res => {
+      this.fetchAgenciesData()
+    })
   }
 
   updateAgency(id) {
