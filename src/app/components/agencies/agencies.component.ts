@@ -12,6 +12,8 @@ export class AgenciesComponent implements OnInit {
   pendingAgencies: Array<any>
   pages: Array<Number>
   activePage: number
+  
+  selectedAgency: any
 
   constructor(
     private agenciesSvc: AgenciesService
@@ -52,6 +54,10 @@ export class AgenciesComponent implements OnInit {
 
   updateAgency(id) {
 
+  }
+
+  select(agency) {
+    this.selectedAgency = agency
   }
 
   toPage(page) {
