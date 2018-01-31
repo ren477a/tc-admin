@@ -14,16 +14,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ptour of pendingTours">
+      <tr *ngFor="let ptour of pendingTours; let i = index">
         <td>{{ptour._id.substring(ptour._id.length-5)}}</td>
         <td>{{ptour.title.substring(0,15)}}</td>
         <td>{{ptour.agency}}</td>
         <td>{{ptour.price}}</td>
         <td>{{ptour.date | date:'dd/MM/yy HH:mm'}}</td>
         <td>
-          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#EditTour">Details</button>
-          <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#delete">Approve</button>
-          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Deny</button>
+          <button (click)="select(ptour)" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#tourDetails">Details</button>
+          <button (click)="approveTour(ptour._id)" type="button" class="btn btn-success" data-toggle="modal" data-target="#delete">Approve</button>
+          <button (click)="denyTour(ptour._id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Deny</button>
         </td>
       </tr>
     </tbody>
@@ -31,7 +31,7 @@
 </div>
 
 <h2>Manage Tours</h2>
-<button class="btn btn-success float-right m-2" data-toggle="modal" data-target="#AddTour">Add Tour</button>
+<button #btnAddTour class="btn btn-success float-right m-2" data-toggle="modal" data-target="#AddTour">Add Tour</button>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -52,8 +52,9 @@
         <td>{{tour.price}}</td>
         <td>{{tour.date | date:'dd/MM/yy HH:mm'}}</td>
         <td>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditTrans">Edit</button>
-          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Delete</button>
+          <button (click)="select(tour)" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#tourDetails">Details</button>
+          <button (click)="select(tour)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditTour">Edit</button>
+          <button (click)="deleteTour(tour)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -65,15 +66,15 @@
     <br>
     <ul class="pagination pagination-md">
       <li class="page-item">
-        <a (click)="previousPage()" class="page-link" >Previous</a>
+        <a [class.disabled]="activePage===1" (click)="previousPage()" class="btn page-link">Previous</a>
       </li>
       <div *ngFor="let page of pages; let i = index">
-        <li class="page-item" [class.active]="isActivePage(i)" >
-        <a (click)="toPage(page)" class="page-link" >{{page}}</a>
-      </li>
+        <li class="page-item" [class.active]="isActivePage(i)">
+          <a (click)="toPage(page)" class="page-link">{{page}}</a>
+        </li>
       </div>
       <li class="page-item">
-        <a (click)="nextPage()" class="page-link">Next</a>
+        <a [class.disabled]="activePage===pages.length" (click)="nextPage()" class="btn page-link">Next</a>
       </li>
     </ul>
     <br>
@@ -82,36 +83,218 @@
 
 <!--MODAL ADD TOUR-->
 <div class="modal fade" id="AddTour">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <form>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add Tour Package</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="exampleInputEmail1" required>Title</label>
+            <input [(ngModel)]="title" name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Baguio City Tour 3D2N">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" required>Agency</label>
+            <input [(ngModel)]="agency" name="agency" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Baguio City Tour 3D2N">
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="exampleInputEmail1">Price Per Voucher</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                  <div class="input-group-addon">PHP</div>
+                  <input [(ngModel)]="price" name="price" type="text" class="form-control" id="inlineFormInputGroup" placeholder="4000">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label for="exampleSelect1">Type</label>
+                <select [(ngModel)]="type" name="type" class="form-control" id="exampleSelect1">
+                  <option>Local</option>
+                  <option>International</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="exampleInputEmail1">Trip Length in Days</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                  <input [(ngModel)]="duration" name="duration" type="text" class="form-control" id="inlineFormInputGroup" placeholder="3">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label for="exampleInputEmail1" data-toggle="tooltip" data-placement="top" title="Vouchers must be redeem before expiring.">Voucher Lifespan in Days</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                  <input [(ngModel)]="validityInDays" name="validityInDays" type="text" class="form-control" id="inlineFormInputGroup" placeholder="30">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleTextarea">Description</label>
+            <textarea [(ngModel)]="description" name="description" class="form-control" id="exampleTextarea" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleTextarea">Itinerary</label>
+            <textarea [(ngModel)]="itinerary" name="itinerary" class="form-control" id="exampleTextarea" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleTextarea">Inclusions</label>
+            <textarea [(ngModel)]="inclusions" name="inclusions" class="form-control" id="exampleTextarea" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleTextarea">Exclusions</label>
+            <textarea [(ngModel)]="exclusions" name="exclusions" class="form-control" id="exampleTextarea" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleTextarea">Terms and Conditions</label>
+            <textarea [(ngModel)]="terms" name="terms" class="form-control" id="exampleTextarea" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputFile">Tour Photo</label>
+            <input (change)="getFiles($event)" name="photo" accept="image/*" type="file" class="form-control-file" id="photo" aria-describedby="fileHelp">
+            <small id="fileHelp" class="form-text text-muted">This photo will be used as thumbnail and banner for your tour package.</small>
+            <small class="text-danger float-right">{{msg}}</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" (click)="onClickAddTour()" class="btn btn-primary">Add tour</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--MODAL EDIT TOUR-->
+<div class="modal fade" id="EditTour">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
       <div class="modal-header">
-       <h4 class="modal-title">New Tour Package</h4>
-		
+        <input type="text" class="form-control mt-1" value="{{selectedTour?.title}}">
+
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <div class="modal-body">
-		<input type="text" class="form-control mt-1" placeholder="Tour Package Name"><hr>
-		<a><img src="http://via.placeholder.com/350x150"></a> <input type="file"><hr>
-		<input type="text" class="form-control mt-1" placeholder="Agency">
-		<input type="text" class="form-control mt-1" placeholder="Type">
-        <textarea class="form-control mt-1" rows="5" placeholder="Description"></textarea>
-		<input type="text" class="form-control mt-1" placeholder="Duration">
-		<textarea class="form-control mt-1" rows="5" placeholder="Itenerary"></textarea>
-		<textarea class="form-control mt-1" rows="5" placeholder="Inclusions"></textarea>
-		<textarea class="form-control mt-1" rows="5" placeholder="Exclusions"></textarea>
-		<textarea class="form-control mt-1" rows="5" placeholder="Terms"></textarea>
-		<input type="text" class="form-control mt-1" placeholder="Validity">
-		<input type="text" class="form-control mt-1" placeholder="Price">
+        <a>
+          <img src="{{selectedTour?.img}}">
+        </a>
+        <input type="file">
+        <hr>
+        <input type="text" class="form-control mt-1" value="{{selectedTour?.agency}}">
+        <input type="text" class="form-control mt-1" value="{{selectedTour?.type}}">
+        <textarea class="form-control mt-1" rows="5">{{selectedTour?.description}}</textarea>
+        <input type="text" class="form-control mt-1" value="Duration">
+        <textarea class="form-control mt-1" rows="5">{{selectedTour?.itinerary}}</textarea>
+        <textarea class="form-control mt-1" rows="5"> {{selectedTour?.inclusions}}</textarea>
+        <textarea class="form-control mt-1" rows="5">{{selectedTour?.exclusions}}</textarea>
+        <textarea class="form-control mt-1" rows="5">{{selectedTour?.terms}}</textarea>
+        <input type="text" class="form-control mt-1" value="{{selectedTour?.validityInDays}}">
+        <input type="text" class="form-control mt-1" value="{{selectedTour?.price}}">
       </div>
-		
+
       <!-- Modal footer -->
       <div class="modal-footer">
-	  <button align="left" type="button" class="btn btn-primary btn-md">Accept</button>
+        <button align="left" type="button" class="btn btn-primary btn-md">Accept</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
 
     </div>
   </div>
 </div>
+
+<!-- modal for tour details -->
+<div class="modal fade" id="tourDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{selectedTour?.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- IMAGE -->
+        <img style='height: 100%; width: 100%; object-fit: contain' src="{{selectedTour?.img}}">
+        <hr>
+        <p>
+          <strong>Status</strong>
+        </p>
+        <p *ngIf="selectedTour?.status === 'onsale'" class="text-success">On Sale</p>
+        <p *ngIf="selectedTour?.status === 'pending'" class="text-warning">Pending</p>
+        <p *ngIf="selectedTour?.status === 'notonsale'" class="text-danger">Not on sale</p>
+        <hr>
+
+        <p>
+          <strong>Type</strong>
+        </p>
+        <p>{{selectedTour?.type}}</p>
+        <hr>
+
+        <p>
+          <strong>Price</strong>
+        </p>
+        <p>PHP {{selectedTour?.price}}</p>
+        <hr>
+
+        <p>
+          <strong>Trip Length in Days</strong>
+        </p>
+        <p>{{selectedTour?.duration}}</p>
+        <hr>
+
+        <p>
+          <strong>Voucher Lifespan in Days</strong>
+        </p>
+        <p>{{selectedTour?.validityInDays}}</p>
+        <hr>
+
+        <p>
+          <strong>Description</strong>
+        </p>
+        <p>{{selectedTour?.description}}</p>
+        <hr>
+
+        <p>
+          <strong>Itinerary</strong>
+        </p>
+        <p>{{selectedTour?.itinerary}}</p>
+        <hr>
+        <p>
+          <strong>Inclusions</strong>
+        </p>
+        <p>{{selectedTour?.inclusions}}</p>
+        <hr>
+        <p>
+          <strong>Exclusions</strong>
+        </p>
+        <p>{{selectedTour?.exclusions}}</p>
+        <hr>
+        <p>
+          <strong>Terms and Conditions</strong>
+        </p>
+        <p>{{selectedTour?.terms}}</p>
+        <hr>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+  <!-- end of modal -->

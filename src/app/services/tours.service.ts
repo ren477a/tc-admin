@@ -10,6 +10,22 @@ export class ToursService {
   constructor(private http: Http) {
   }
 
+  uploadPhoto(photo: File) {
+    let data = new FormData();
+    data.append('photo', photo);
+    let ep = this.base + 'tours/upload'
+    return this.http.post(ep, data,)
+      .map(res => res.json());
+  }
+
+  addTour(tour){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.base + 'tours/'
+    return this.http.post(ep, tour, {headers: headers})
+      .map(res => res.json());
+  }
+
 
   // Approve registration
   approve(id) {
@@ -17,6 +33,14 @@ export class ToursService {
     headers.append('Content-Type', 'application/json');
     let ep = this.base + 'tours/' + id
     return this.http.put(ep, { status: 'onsale' }, { headers: headers })
+      .map(res => res.json());
+  }
+
+  deny(id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let ep = this.base + 'tours/' + id
+    return this.http.put(ep, { status: 'notonsale' }, { headers: headers })
       .map(res => res.json());
   }
 
