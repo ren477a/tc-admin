@@ -153,17 +153,23 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <strong>{{selectedAgency.agencyName}}</strong>
+        <strong>{{selectedAgency?.agencyName}}</strong>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <p><strong>Agency Name: </strong>{{selectedAgency.agencyName}}</p>
-        <p><strong>Owned By: </strong>{{selectedAgency.ownedBy}}</p>
-        <p><strong>Email: </strong>{{selectedAgency.email}}</p>
-        <p><strong>Mobile Number: </strong>{{selectedAgency.mobileNumber}}</p>
-        <p><strong>Address: </strong>{{selectedAgency.address}}</p>
-        <p><strong>Status: </strong>{{selectedAgency.status}}</p>
-        <p><strong>Current Balance: </strong>{{selectedAgency.balance | currency:'PHP':true:'1.2-2'}}</p>
+        <p><strong>Agency Name: </strong>{{selectedAgency?.agencyName}}</p>
+        <p><strong>Owned By: </strong>{{selectedAgency?.ownedBy}}</p>
+        <p><strong>Email: </strong>{{selectedAgency?.email}}</p>
+        <p><strong>Mobile Number: </strong>{{selectedAgency?.mobileNumber}}</p>
+        <p><strong>Address: </strong>{{selectedAgency?.address}}</p>
+        <p><strong>Status: </strong>{{selectedAgency?.status}}</p>
+        <p><strong>Current Balance: </strong>{{selectedAgency?.balance | currency:'PHP':true:'1.2-2'}}</p>
+        <p><strong>BIR:</strong></p>
+        <img src="{{selectedAgency?.bir}}" style="max-width:100%">
+        <p><strong>DTI:</strong></p>
+        <img src="{{selectedAgency?.dti}}" style="max-width:100%">       
+         <p><strong>Business Permit:</strong></p>
+        <img src="{{selectedAgency?.business}}" style="max-width:100%">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
