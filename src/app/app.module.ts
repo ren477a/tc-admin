@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms'
 
 import { AuthService } from './services/auth.service';
 import { ToursService } from './services/tours.service';
@@ -10,6 +11,7 @@ import { AgenciesService } from './services/agencies.service';
 import { CashoutsService } from './services/cashouts.service';
 import { TransactionsService } from './services/transactions.service';
 import { UsersService } from './services/users.service';
+import { ValidateService } from './services/validate.service';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -51,7 +53,8 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [
     AuthService,
@@ -59,7 +62,8 @@ const appRoutes: Routes = [
     CashoutsService,
     ToursService,
     TransactionsService,
-    UsersService
+    UsersService,
+    ValidateService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AgenciesService } from '../../services/agencies.service'
 
 @Component({
   selector: 'app-agencies',
@@ -8,12 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class AgenciesComponent implements OnInit {
 
   agencies: Array<any>
+  pendingAgencies: Array<any>
   pages: Array<Number>
   activePage: number
 
-  constructor() { }
+  constructor(
+    private agenciesSvc: AgenciesService
+  ) { }
 
   ngOnInit() {
+    this.pages = []
+    this.activePage = 1
+    this.fetchAgenciesData()
+    this.fetchPendingAgenciesData()
   }
 
   approveAgency(id) {
@@ -39,7 +47,7 @@ export class AgenciesComponent implements OnInit {
 
   previousPage() {    
     this.activePage--
-    if(this.activePage<0) this.activePage = 0;
+    if(this.activePage<=0) this.activePage = 1;
     this.fetchAgenciesData()
   }
 
@@ -50,10 +58,19 @@ export class AgenciesComponent implements OnInit {
   }
 
   fetchAgenciesData() {
-    // this.toursSvc.readAll(this.activePage).subscribe(res => {
-    //   this.tours = res.tours
-    //   this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
-    // })
+    this.agenciesSvc.readAll(this.activePage).subscribe(res => {
+      this.agencies = res.agency
+      console.log(this.agencies)
+      this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
+    })
+  }
+
+  fetchPendingAgenciesData() {
+    this.agenciesSvc.readPending().subscribe(res => {
+      this.pendingAgencies = res.agency
+      console.log(this.pendingAgencies)
+      this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
+    })
   }
 
 

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AgenciesService {
 
-  base: String = 'http://travelcatalog.me/api/'
+  base: String = 'http://www.travelcatalog.me/api/'
 
   constructor(private http: Http) { 
   }
@@ -41,6 +41,14 @@ export class AgenciesService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     let ep = this.base + 'agencies?page=' + page
+    return this.http.get(ep, {headers: headers})
+      .map(res => res.json());
+  }
+
+  readPending() {
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.base + 'agencies?status=pending'
     return this.http.get(ep, {headers: headers})
       .map(res => res.json());
   }
