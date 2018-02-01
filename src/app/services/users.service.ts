@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UsersService {
 
-  base: String = 'http://travelcatalog.me/api/'
+  base: String = 'http://www.travelcatalog.me/api/'
 
   constructor(private http: Http) { 
   }

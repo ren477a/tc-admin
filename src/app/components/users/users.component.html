@@ -14,17 +14,17 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let tour of tours">
-        <td>{{tour._id.substring(tour._id.length-5)}}</td>
-        <td>{{tour.title}}</td>
-        <td>{{tour.agency}}</td>
-        <td>{{tour.price}}</td>
-        <td>{{tour.date | date:'dd/MM/yy HH:mm'}}</td>
+      <tr *ngFor="let user of users">
+        <td>{{user._id.substring(user._id.length-5)}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.mobileNumber}}</td>
         <td>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditUser">Edit</button>
           <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Delete</button>
         </td>
-      </tr> -->
+      </tr>
     </tbody>
   </table>
 </div>
