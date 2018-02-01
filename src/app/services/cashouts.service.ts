@@ -5,18 +5,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CashoutsService {
 
-  base: String = 'http://travelcatalog.me/api/'
+  base: String = 'http://www.travelcatalog.me/api/'
 
   constructor(private http: Http) { 
   }
 
 
   // Process cashout
-  process(id, status, msg) {
+  process(id, msg) {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.base + 'cashouts/' + id
-    return this.http.put(ep, {status: status, msg: msg}, {headers: headers})
+    let ep = this.base + 'cashout/' + id
+    return this.http.put(ep, {status: 'processed', msg: msg, dateProcessed: Date.now()}, {headers: headers})
       .map(res => res.json());
   }
 
@@ -24,7 +24,7 @@ export class CashoutsService {
   create(cashout) {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.base + 'cashouts'
+    let ep = this.base + 'cashout'
     return this.http.post(ep, cashout, {headers: headers})
       .map(res => res.json());
   }
@@ -32,15 +32,23 @@ export class CashoutsService {
   read(id) {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.base + 'cashouts/' + id
+    let ep = this.base + 'cashout/' + id
     return this.http.get(ep, {headers: headers})
       .map(res => res.json());
   }
 
-  readAll() {
+  readAll(page) {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.base + 'cashouts'
+    let ep = this.base + 'cashout?page=' + page
+    return this.http.get(ep, {headers: headers})
+      .map(res => res.json());
+  }
+
+  readPending() {
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    let ep = this.base + 'cashout?status=pending'
     return this.http.get(ep, {headers: headers})
       .map(res => res.json());
   }
@@ -48,7 +56,7 @@ export class CashoutsService {
   delete(id) {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.base + 'cashouts/' + id
+    let ep = this.base + 'cashout/' + id
     return this.http.delete(ep, {headers: headers})
       .map(res => res.json());
   }

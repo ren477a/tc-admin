@@ -14,18 +14,17 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let ptour of pendingTours">
-        <td>{{ptour._id.substring(ptour._id.length-5)}}</td>
-        <td>{{ptour.title.substring(0,15)}}</td>
-        <td>{{ptour.agency}}</td>
-        <td>{{ptour.price}}</td>
-        <td>{{ptour.date | date:'dd/MM/yy HH:mm'}}</td>
+      <tr *ngFor="let pcashout of pendingCashouts">
+        <td>{{pcashout._id.substring(pcashout._id.length-5)}}</td>
+        <td>{{pcashout.agency}}</td>
+        <td>{{pcashout.dateRequested | date:'dd/MM/yy HH:mm'}}</td>
+        <td>{{pcashout.status}}</td>
+        <td>{{pcashout.amount | currency:'PHP':true:'1.2-2' }}</td>
         <td>
-          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#EditTrans">Details</button>
-          <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#delete">Approve</button>
-          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Deny</button>
+          <button (click)="select(pcashout)" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#Details">Details</button>
+          <button (click)="process(pcashout)" type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#delete">Mark as Processed</button>
         </td>
-      </tr> -->
+      </tr>
     </tbody>
   </table>
 </div>
@@ -36,25 +35,27 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Tour Title</th>
         <th>Agency</th>
-        <th>Price</th>
-        <th>Date</th>
+        <th>Date Requested</th>
+        <th>Status</th>
+        <th>Amount</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let tour of tours">
-        <td>{{tour._id.substring(tour._id.length-5)}}</td>
-        <td>{{tour.title}}</td>
-        <td>{{tour.agency}}</td>
-        <td>{{tour.price}}</td>
-        <td>{{tour.date | date:'dd/MM/yy HH:mm'}}</td>
+      <tr *ngFor="let cashout of cashouts">
+        <td>{{cashout._id.substring(cashout._id.length-5)}}</td>
+        <td>{{cashout.agency}}</td>
+        <td>{{cashout.dateRequested | date:'dd/MM/yy HH:mm'}}</td>
+        <td>{{cashout.dateProcessed | date:'dd/MM/yy HH:mm'}}</td>
+        <td>{{cashout.status}}</td>
+        <td>{{cashout.amount | currency:'PHP':true:'1.2-2' }}</td>
         <td>
+          <button (click)="select(cashout)" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#Details">Details</button>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditCashout">Edit</button>
-          <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#delete">Delete</button>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
         </td>
-      </tr> -->
+      </tr>
     </tbody>
   </table>
 </div>
@@ -64,7 +65,7 @@
     <br>
     <ul class="pagination pagination-md">
       <li class="page-item">
-        <a (click)="previousPage()" class="page-link" >Previous</a>
+        <a [class.disabled]="activePage===1" (click)="previousPage()" class="btn page-link" >Previous</a>
       </li>
       <div *ngFor="let page of pages; let i = index">
         <li class="page-item" [class.active]="isActivePage(i)" >
@@ -72,7 +73,7 @@
       </li>
       </div>
       <li class="page-item">
-        <a (click)="nextPage()" class="page-link">Next</a>
+        <a [class.disabled]="activePage===pages.length" (click)="nextPage()" class="btn page-link">Next</a>
       </li>
     </ul>
     <br>
@@ -99,6 +100,31 @@
       </div>
       <div class="modal-footer">
 	  <button  align="right" type="button" class="btn btn-primary" align="right">OK</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--MODAL Details-->
+<div class="modal fade" id="Details">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>ID: {{selectedCashout?._id}}</strong>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Agency Name: </strong>{{selectedCashout?.agency}}</p>
+        <p><strong>Date Requested: </strong>{{selectedCashout?.dateRequested | date:'dd/MM/yy HH:mm'}}</p>
+        <p><strong>Status: </strong>{{selectedCashout?.status}}</p>
+        <p><strong>Amount: </strong>{{selectedCashout?.amount}}</p>
+        <p><strong>Bank: </strong>{{selectedCashout?.bankAccount.bankName}}</p>
+        <p><strong>Account Number: </strong>{{selectedCashout?.bankAccount.accountNumber}}</p>
+        <p><strong>Account Name: </strong>{{selectedCashout?.bankAccount.accountName}}</p>
+      </div>
+      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CashoutsService } from '../../services/cashouts.service'
 
 @Component({
   selector: 'app-cashouts',
@@ -8,20 +9,37 @@ import { Component, OnInit } from '@angular/core';
 export class CashoutsComponent implements OnInit {
 
   cashouts: Array<any>
+  pendingCashouts: Array<any>
   pages: Array<Number>
   activePage: number
 
-  constructor() { }
+  selectedCashout: any
+
+  constructor(
+    private cashoutsSvc: CashoutsService
+  ) { }
 
   ngOnInit() {
+    this.pages = []
+    this.activePage = 1
+    this.fetchData()
+    this.fetchPending()
   }
 
   deleteCashout(id) {
 
   }
 
-  updateCashout(id) {
+  process(cashout) {
+    this.cashoutsSvc.process(cashout._id, '').subscribe(res => {
+      // show success
+      this.fetchPending()
+      this.fetchData()
+    })
+  }
 
+  select(cashout) {
+    this.selectedCashout = cashout
   }
 
   toPage(page) {
@@ -42,10 +60,18 @@ export class CashoutsComponent implements OnInit {
   }
 
   fetchData() {
-    // this.toursSvc.readAll(this.activePage).subscribe(res => {
-    //   this.tours = res.tours
-    //   this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
-    // })
+    this.cashoutsSvc.readAll(this.activePage).subscribe(res => {
+      console.log(res)
+      this.cashouts = res.cashout
+      console.log(this.cashouts)
+      this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
+    })
+  }
+
+  fetchPending() {
+    this.cashoutsSvc.readPending().subscribe(res => {
+      this.pendingCashouts = res.cashouts
+    })
   }
 
 
