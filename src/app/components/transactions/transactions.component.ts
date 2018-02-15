@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TransactionsService } from '../../services/transactions.service'
 
 @Component({
   selector: 'app-transactions',
@@ -11,9 +12,12 @@ export class TransactionsComponent implements OnInit {
   pages: Array<Number>
   activePage: number
 
-  constructor() { }
+  constructor(
+    private transactionsSvc: TransactionsService
+  ) { }
 
   ngOnInit() {
+    this.fetchData()
   }
 
   deleteTransaction(id) {
@@ -42,10 +46,11 @@ export class TransactionsComponent implements OnInit {
   }
 
   fetchData() {
-    // this.toursSvc.readAll(this.activePage).subscribe(res => {
-    //   this.tours = res.tours
-    //   this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
-    // })
+    this.transactionsSvc.readAll().subscribe(res => {
+      this.transactions = res
+      console.log(res)
+      //this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
+    })
   }
 
 
