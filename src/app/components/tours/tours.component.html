@@ -31,7 +31,7 @@
 </div>
 
 <h2>Manage Tours</h2>
-<button #btnAddTour class="btn btn-success float-right m-2" data-toggle="modal" data-target="#AddTour">Add Tour</button>
+<!-- <button #btnAddTour class="btn btn-success float-right m-2" data-toggle="modal" data-target="#AddTour">Add Tour</button> -->
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -53,7 +53,7 @@
         <td>{{tour.date | date:'dd/MM/yy HH:mm'}}</td>
         <td>
           <button (click)="select(tour)" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#tourDetails">Details</button>
-          <button (click)="select(tour)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditTour">Edit</button>
+          <!-- <button (click)="select(tour)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditTour">Edit</button> -->
           <button (click)="deleteTour(tour)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
         </td>
       </tr>
