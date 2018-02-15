@@ -70,7 +70,7 @@ export class CashoutsComponent implements OnInit {
 
   fetchPending() {
     this.cashoutsSvc.readPending().subscribe(res => {
-      this.pendingCashouts = res.cashouts
+      this.pendingCashouts = res.cashout
     })
   }
 

@@ -37,6 +37,7 @@
         <th>ID</th>
         <th>Agency</th>
         <th>Date Requested</th>
+        <th>Date Processed</th>
         <th>Status</th>
         <th>Amount</th>
         <th>Actions</th>
@@ -52,8 +53,8 @@
         <td>{{cashout.amount | currency:'PHP':true:'1.2-2' }}</td>
         <td>
           <button (click)="select(cashout)" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#Details">Details</button>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditCashout">Edit</button>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditCashout">Edit</button> -->
+          <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button> -->
         </td>
       </tr>
     </tbody>
