@@ -17,10 +17,9 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.usersSvc.readAll().subscribe(res => {
-      console.log(res)
-      this.users = res.users
-    })
+    this.pages = []
+    this.activePage = 1
+    this.fetchData()
   }
 
   saveNewUser() {
@@ -42,7 +41,7 @@ export class UsersComponent implements OnInit {
 
   previousPage() {    
     this.activePage--
-    if(this.activePage<0) this.activePage = 0;
+    if(this.activePage<=0) this.activePage = 1;
     this.fetchData()
   }
 
@@ -53,10 +52,10 @@ export class UsersComponent implements OnInit {
   }
 
   fetchData() {
-    // this.toursSvc.readAll(this.activePage).subscribe(res => {
-    //   this.tours = res.tours
-    //   this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
-    // })
+    this.usersSvc.readAll(this.activePage).subscribe(res => {
+      this.users = res.users
+      this.pages = Array(res.totalPages).fill(1).map((x,i)=>i+1);
+    })
   }
 
 

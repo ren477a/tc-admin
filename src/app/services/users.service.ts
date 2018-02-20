@@ -26,10 +26,10 @@ export class UsersService {
       .map(res => res.json());
   }
 
-  readAll() {
+  readAll(page) {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    let ep = this.base + 'users'
+    let ep = this.base + 'users?page=' + page
     return this.http.get(ep, {headers: headers})
       .map(res => res.json());
   }
