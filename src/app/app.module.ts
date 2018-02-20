@@ -27,7 +27,7 @@ import { HttpClient } from '@angular/common/http/src/client';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const appRoutes: Routes = [
-  { path: '', component: DashboardComponent},
+  { path: '', component: UsersComponent},
   { path: 'tours', component: ToursComponent},
   { path: 'agencies', component: AgenciesComponent},
   { path: 'users', component: UsersComponent},
