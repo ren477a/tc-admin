@@ -31,6 +31,7 @@ export class ReportsComponent implements OnInit {
   generateDailySalesReport() {
     this.isLoading1 = true;
     this.button1 = "Generating..."
+    this.dUrl = undefined
     let date = new Date(Date.parse(this.day)).toISOString()
     console.log(date)
     this.reportsSvc.dailySales({day: date}).subscribe(res => {
@@ -44,6 +45,7 @@ export class ReportsComponent implements OnInit {
   generateMonthlySalesReport() {
     this.isLoading2 = true;
     this.button2 = "Generating..."
+    this.mUrl = undefined
     let date = new Date(Date.parse(this.month)).toISOString()
     console.log(date)
     this.reportsSvc.monthlySales({day: date}).subscribe(res => {

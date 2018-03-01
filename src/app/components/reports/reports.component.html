@@ -8,21 +8,40 @@
         <label for="example-date-input" class="form-label">Select Day:</label>
         <input [(ngModel)]="day" class="form-control" type="date" value="2018-01-01" id="example-date-input">
       </div>
-      <button (click)="generateDailySalesReport()" class="btn btn-lg btn-outline-primary float-right" [disabled]="isLoading1">
-        <i class="fa" [ngClass]="{'fa-spin fa-spinner': isLoading1, 'fa-check': !isLoading1}"></i> {{button1}}
-      </button>
-      <a *ngIf="dUrl" [href]="dUrl" class="btn btn-link float-right" target="_blank"><strong>Click here to download.</strong></a>
+
+      <div class="row">
+        <div class="col-md-12">
+          <button (click)="generateDailySalesReport()" class="btn btn-lg btn-outline-primary float-right" [disabled]="isLoading1">
+            <i class="fa" [ngClass]="{'fa-spin fa-spinner': isLoading1, 'fa-check': !isLoading1}"></i> {{button1}}
+          </button>
+        </div>
+        <div class="col-md-12">
+          <a *ngIf="dUrl" [href]="dUrl" class="btn btn-link float-right" target="_blank">
+            <strong>Click here to download.</strong>
+          </a>
+        </div>
+
+      </div>
+
     </div>
     <div class="col-sm-6">
       <div class="form-group">
         <label for="example-date-input" class="form-label">Select Month:</label>
         <input [(ngModel)]="month" class="form-control" type="month" value="2018-01-01" id="example-date-input">
       </div>
-      <button (click)="generateMonthlySalesReport()" class="btn btn-lg btn-outline-primary float-right" [disabled]="isLoading2">
-          <i class="fa" [ngClass]="{'fa-spin fa-spinner': isLoading2, 'fa-check': !isLoading2}"></i> 
-          {{button2}}
-        </button>
-      <a *ngIf="mUrl" [href]="mUrl" class="btn btn-link float-right" target="_blank"><strong>Click here to download.</strong></a>
+      <div class="row">
+        <div class="col-md-12">
+          <button (click)="generateMonthlySalesReport()" class="btn btn-lg btn-outline-primary float-right" [disabled]="isLoading2">
+            <i class="fa" [ngClass]="{'fa-spin fa-spinner': isLoading2, 'fa-check': !isLoading2}"></i>
+            {{button2}}
+          </button>
+        </div>
+        <div class="col-md-12">
+          <a *ngIf="mUrl" [href]="mUrl" class="btn btn-link float-right" target="_blank">
+            <strong>Click here to download.</strong>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
