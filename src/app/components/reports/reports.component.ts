@@ -8,10 +8,10 @@ import { ReportsService } from '../../services/reports.service'
 })
 export class ReportsComponent implements OnInit {
 
-  private day: string;
-  private month: string;
-  private dUrl: string;
-  private mUrl: string;
+  day: string;
+  month: string;
+  dUrl: string;
+  mUrl: string;
   isLoading1: boolean;
   button1: string;
   isLoading2: boolean;
