@@ -12,6 +12,7 @@ import { CashoutsService } from './services/cashouts.service';
 import { TransactionsService } from './services/transactions.service';
 import { UsersService } from './services/users.service';
 import { ValidateService } from './services/validate.service';
+import { ReportsService } from './services/reports.service';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -25,6 +26,7 @@ import { ApprovetourComponent } from './components/approvetour/approvetour.compo
 import { ProcessComponent } from './components/process/process.component';
 import { HttpClient } from '@angular/common/http/src/client';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const appRoutes: Routes = [
   { path: '', component: UsersComponent},
@@ -32,7 +34,8 @@ const appRoutes: Routes = [
   { path: 'agencies', component: AgenciesComponent},
   { path: 'users', component: UsersComponent},
   { path: 'transactions', component: TransactionsComponent},
-  { path: 'cashouts', component: CashoutsComponent}
+  { path: 'cashouts', component: CashoutsComponent},
+  { path: 'reports', component: ReportsComponent}
 ]
 
 @NgModule({
@@ -47,7 +50,8 @@ const appRoutes: Routes = [
     ApprovegencyComponent,
     ApprovetourComponent,
     ProcessComponent,
-    DashboardComponent
+    DashboardComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,8 @@ const appRoutes: Routes = [
     ToursService,
     TransactionsService,
     UsersService,
-    ValidateService
+    ValidateService,
+    ReportsService
   ],
   bootstrap: [AppComponent]
 })
