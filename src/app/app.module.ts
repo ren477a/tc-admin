@@ -27,6 +27,7 @@ import { ProcessComponent } from './components/process/process.component';
 import { HttpClient } from '@angular/common/http/src/client';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ReportsComponent } from './components/reports/reports.component';
+import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
   { path: '', component: UsersComponent},
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
   { path: 'users', component: UsersComponent},
   { path: 'transactions', component: TransactionsComponent},
   { path: 'cashouts', component: CashoutsComponent},
-  { path: 'reports', component: ReportsComponent}
+  { path: 'reports', component: ReportsComponent},
+  { path: 'login', component: LoginComponent}
 ]
 
 @NgModule({
@@ -51,7 +53,8 @@ const appRoutes: Routes = [
     ApprovetourComponent,
     ProcessComponent,
     DashboardComponent,
-    ReportsComponent
+    ReportsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
