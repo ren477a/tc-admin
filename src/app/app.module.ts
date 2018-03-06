@@ -13,6 +13,7 @@ import { TransactionsService } from './services/transactions.service';
 import { UsersService } from './services/users.service';
 import { ValidateService } from './services/validate.service';
 import { ReportsService } from './services/reports.service';
+import { GuardService } from './services/guard.service';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -30,13 +31,13 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
-  { path: '', component: UsersComponent},
-  { path: 'tours', component: ToursComponent},
-  { path: 'agencies', component: AgenciesComponent},
-  { path: 'users', component: UsersComponent},
-  { path: 'transactions', component: TransactionsComponent},
-  { path: 'cashouts', component: CashoutsComponent},
-  { path: 'reports', component: ReportsComponent},
+  { path: '', component: UsersComponent, canActivate: [GuardService]},
+  { path: 'tours', component: ToursComponent, canActivate: [GuardService]},
+  { path: 'agencies', component: AgenciesComponent, canActivate: [GuardService]},
+  { path: 'users', component: UsersComponent, canActivate: [GuardService]},
+  { path: 'transactions', component: TransactionsComponent, canActivate: [GuardService]},
+  { path: 'cashouts', component: CashoutsComponent, canActivate: [GuardService]},
+  { path: 'reports', component: ReportsComponent, canActivate: [GuardService]},
   { path: 'login', component: LoginComponent}
 ]
 
@@ -71,7 +72,8 @@ const appRoutes: Routes = [
     TransactionsService,
     UsersService,
     ValidateService,
-    ReportsService
+    ReportsService,
+    GuardService
   ],
   bootstrap: [AppComponent]
 })
